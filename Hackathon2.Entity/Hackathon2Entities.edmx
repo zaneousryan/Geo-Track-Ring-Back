@@ -1,0 +1,715 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Hackathon2.Entity.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="DriverId" />
+          </Key>
+          <Property Name="DriverId" Type="int" Nullable="false" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="FirstName" Type="nchar" MaxLength="10" />
+          <Property Name="LastName" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Outing">
+          <Key>
+            <PropertyRef Name="OutingId" />
+          </Key>
+          <Property Name="OutingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="datetime2" Precision="7" />
+          <Property Name="EndDate" Type="datetime2" Precision="7" />
+          <Property Name="CompanyId" Type="int" />
+          <Property Name="DriverId" Type="int" />
+          <Property Name="CurrentLatitude" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CurrentLongitude" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CurrentLocationLastUpdated" Type="datetime2" Precision="7" />
+          <Property Name="Text1" Type="nvarchar(max)" />
+          <Property Name="Text2" Type="nvarchar(max)" />
+          <Property Name="Text3" Type="nvarchar(max)" />
+          <Property Name="Text1LastUpdated" Type="datetime2" Precision="7" />
+          <Property Name="Text2LastUpdated" Type="datetime2" Precision="7" />
+          <Property Name="Text3LastUpdated" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Passenger">
+          <Key>
+            <PropertyRef Name="PassengerId" />
+          </Key>
+          <Property Name="PassengerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserId" Type="uniqueidentifier" />
+          <Property Name="CurrentLatitude" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CurrentLongitude" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="CurrentOutingId" Type="int" />
+        </EntityType>
+        <EntityType Name="PassengerPreference">
+          <Key>
+            <PropertyRef Name="PassengerPreferenceId" />
+          </Key>
+          <Property Name="PassengerPreferenceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PassengerId" Type="int" />
+          <Property Name="PreferenceId" Type="int" />
+          <Property Name="Value" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Preference">
+          <Key>
+            <PropertyRef Name="PreferenceId" />
+          </Key>
+          <Property Name="PreferenceId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Stop">
+          <Key>
+            <PropertyRef Name="StopId" />
+          </Key>
+          <Property Name="StopId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OutingId" Type="int" />
+          <Property Name="RankSeq" Type="smallint" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Latitude" Type="decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="Longitude" Type="decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="StopStatusId" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StopPassenger">
+          <Key>
+            <PropertyRef Name="StopPassengerId" />
+          </Key>
+          <Property Name="StopPassengerId" Type="int" Nullable="false" />
+          <Property Name="StopId" Type="int" Nullable="false" />
+          <Property Name="PassengerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StopStatus">
+          <Key>
+            <PropertyRef Name="StopStatusId" />
+          </Key>
+          <Property Name="StopStatusId" Type="smallint" Nullable="false" />
+          <Property Name="Description" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Driver_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Driver" Type="Self.Driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Driver">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outing_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Outing" Type="Self.Outing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Outing">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outing_Driver">
+          <End Role="Driver" Type="Self.Driver" Multiplicity="0..1" />
+          <End Role="Outing" Type="Self.Outing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="DriverId" />
+            </Principal>
+            <Dependent Role="Outing">
+              <PropertyRef Name="DriverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passenger_Outing">
+          <End Role="Outing" Type="Self.Outing" Multiplicity="0..1" />
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outing">
+              <PropertyRef Name="OutingId" />
+            </Principal>
+            <Dependent Role="Passenger">
+              <PropertyRef Name="CurrentOutingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassengerPreference_Passenger">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="0..1" />
+          <End Role="PassengerPreference" Type="Self.PassengerPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="PassengerId" />
+            </Principal>
+            <Dependent Role="PassengerPreference">
+              <PropertyRef Name="PassengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassengerPreference_Preference">
+          <End Role="Preference" Type="Self.Preference" Multiplicity="0..1" />
+          <End Role="PassengerPreference" Type="Self.PassengerPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preference">
+              <PropertyRef Name="PreferenceId" />
+            </Principal>
+            <Dependent Role="PassengerPreference">
+              <PropertyRef Name="PreferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stop_Outing">
+          <End Role="Outing" Type="Self.Outing" Multiplicity="0..1" />
+          <End Role="Stop" Type="Self.Stop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outing">
+              <PropertyRef Name="OutingId" />
+            </Principal>
+            <Dependent Role="Stop">
+              <PropertyRef Name="OutingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stop_StopStatus">
+          <End Role="StopStatus" Type="Self.StopStatus" Multiplicity="1" />
+          <End Role="Stop" Type="Self.Stop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StopStatus">
+              <PropertyRef Name="StopStatusId" />
+            </Principal>
+            <Dependent Role="Stop">
+              <PropertyRef Name="StopStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopPassenger_Passenger">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="1" />
+          <End Role="StopPassenger" Type="Self.StopPassenger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="PassengerId" />
+            </Principal>
+            <Dependent Role="StopPassenger">
+              <PropertyRef Name="PassengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopPassenger_Stop">
+          <End Role="Stop" Type="Self.Stop" Multiplicity="1" />
+          <End Role="StopPassenger" Type="Self.StopPassenger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stop">
+              <PropertyRef Name="StopId" />
+            </Principal>
+            <Dependent Role="StopPassenger">
+              <PropertyRef Name="StopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Hackathon2EntityStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Outing" EntityType="Self.Outing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passenger" EntityType="Self.Passenger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PassengerPreference" EntityType="Self.PassengerPreference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Preference" EntityType="Self.Preference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stop" EntityType="Self.Stop" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StopPassenger" EntityType="Self.StopPassenger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StopStatus" EntityType="Self.StopStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Driver_Company" Association="Self.FK_Driver_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Driver" EntitySet="Driver" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outing_Company" Association="Self.FK_Outing_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Outing" EntitySet="Outing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outing_Driver" Association="Self.FK_Outing_Driver">
+            <End Role="Driver" EntitySet="Driver" />
+            <End Role="Outing" EntitySet="Outing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passenger_Outing" Association="Self.FK_Passenger_Outing">
+            <End Role="Outing" EntitySet="Outing" />
+            <End Role="Passenger" EntitySet="Passenger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassengerPreference_Passenger" Association="Self.FK_PassengerPreference_Passenger">
+            <End Role="Passenger" EntitySet="Passenger" />
+            <End Role="PassengerPreference" EntitySet="PassengerPreference" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassengerPreference_Preference" Association="Self.FK_PassengerPreference_Preference">
+            <End Role="Preference" EntitySet="Preference" />
+            <End Role="PassengerPreference" EntitySet="PassengerPreference" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stop_Outing" Association="Self.FK_Stop_Outing">
+            <End Role="Outing" EntitySet="Outing" />
+            <End Role="Stop" EntitySet="Stop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stop_StopStatus" Association="Self.FK_Stop_StopStatus">
+            <End Role="StopStatus" EntitySet="StopStatus" />
+            <End Role="Stop" EntitySet="Stop" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopPassenger_Passenger" Association="Self.FK_StopPassenger_Passenger">
+            <End Role="Passenger" EntitySet="Passenger" />
+            <End Role="StopPassenger" EntitySet="StopPassenger" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopPassenger_Stop" Association="Self.FK_StopPassenger_Stop">
+            <End Role="Stop" EntitySet="Stop" />
+            <End Role="StopPassenger" EntitySet="StopPassenger" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Hackathon2.Entity" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Drivers" Relationship="Self.FK_Driver_Company" FromRole="Company" ToRole="Driver" />
+          <NavigationProperty Name="Outings" Relationship="Self.FK_Outing_Company" FromRole="Company" ToRole="Outing" />
+        </EntityType>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="DriverId" />
+          </Key>
+          <Property Name="DriverId" Type="Int32" Nullable="false" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="FirstName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_Driver_Company" FromRole="Driver" ToRole="Company" />
+          <NavigationProperty Name="Outings" Relationship="Self.FK_Outing_Driver" FromRole="Driver" ToRole="Outing" />
+        </EntityType>
+        <EntityType Name="Outing">
+          <Key>
+            <PropertyRef Name="OutingId" />
+          </Key>
+          <Property Name="OutingId" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="7" />
+          <Property Name="EndDate" Type="DateTime" Precision="7" />
+          <Property Name="CompanyId" Type="Int32" />
+          <Property Name="DriverId" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_Outing_Company" FromRole="Outing" ToRole="Company" />
+          <NavigationProperty Name="Driver" Relationship="Self.FK_Outing_Driver" FromRole="Outing" ToRole="Driver" />
+          <NavigationProperty Name="Stops" Relationship="Self.FK_Stop_Outing" FromRole="Outing" ToRole="Stop" />
+          <Property Name="CurrentLatitude" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="CurrentLongitude" Type="Decimal" Precision="18" Scale="6" />
+          <NavigationProperty Name="Passengers" Relationship="Hackathon2.Entity.FK_Passenger_Outing" FromRole="Outing" ToRole="Passenger" />
+          <Property Name="CurrentLocationLastUpdated" Type="DateTime" Precision="7" />
+          <Property Name="Text1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Text2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Text3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Text1LastUpdated" Type="DateTime" Precision="7" />
+          <Property Name="Text2LastUpdated" Type="DateTime" Precision="7" />
+          <Property Name="Text3LastUpdated" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="Passenger">
+          <Key>
+            <PropertyRef Name="PassengerId" />
+          </Key>
+          <Property Name="PassengerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Guid" />
+          <NavigationProperty Name="PassengerPreferences" Relationship="Self.FK_PassengerPreference_Passenger" FromRole="Passenger" ToRole="PassengerPreference" />
+          <NavigationProperty Name="StopPassengers" Relationship="Self.FK_StopPassenger_Passenger" FromRole="Passenger" ToRole="StopPassenger" />
+          <Property Name="CurrentLatitude" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="CurrentLongitude" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="CurrentOutingId" Type="Int32" />
+          <NavigationProperty Name="CurrentOuting" Relationship="Hackathon2.Entity.FK_Passenger_Outing" FromRole="Passenger" ToRole="Outing" />
+        </EntityType>
+        <EntityType Name="PassengerPreference">
+          <Key>
+            <PropertyRef Name="PassengerPreferenceId" />
+          </Key>
+          <Property Name="PassengerPreferenceId" Type="Int32" Nullable="false" />
+          <Property Name="PassengerId" Type="Int32" />
+          <Property Name="PreferenceId" Type="Int32" />
+          <Property Name="Value" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Passenger" Relationship="Self.FK_PassengerPreference_Passenger" FromRole="PassengerPreference" ToRole="Passenger" />
+          <NavigationProperty Name="Preference" Relationship="Self.FK_PassengerPreference_Preference" FromRole="PassengerPreference" ToRole="Preference" />
+        </EntityType>
+        <EntityType Name="Preference">
+          <Key>
+            <PropertyRef Name="PreferenceId" />
+          </Key>
+          <Property Name="PreferenceId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PassengerPreferences" Relationship="Self.FK_PassengerPreference_Preference" FromRole="Preference" ToRole="PassengerPreference" />
+        </EntityType>
+        <EntityType Name="Stop">
+          <Key>
+            <PropertyRef Name="StopId" />
+          </Key>
+          <Property Name="StopId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OutingId" Type="Int32" />
+          <Property Name="RankSeq" Type="Int16" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Outing" Relationship="Self.FK_Stop_Outing" FromRole="Stop" ToRole="Outing" />
+          <NavigationProperty Name="StopPassengers" Relationship="Self.FK_StopPassenger_Stop" FromRole="Stop" ToRole="StopPassenger" />
+          <Property Name="Latitude" Type="Decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="StopStatusId" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="StopStatus" Relationship="Hackathon2.Entity.FK_Stop_StopStatus" FromRole="Stop" ToRole="StopStatu" />
+        </EntityType>
+        <EntityType Name="StopPassenger">
+          <Key>
+            <PropertyRef Name="StopPassengerId" />
+          </Key>
+          <Property Name="StopPassengerId" Type="Int32" Nullable="false" />
+          <Property Name="StopId" Type="Int32" Nullable="false" />
+          <Property Name="PassengerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Passenger" Relationship="Self.FK_StopPassenger_Passenger" FromRole="StopPassenger" ToRole="Passenger" />
+          <NavigationProperty Name="Stop" Relationship="Self.FK_StopPassenger_Stop" FromRole="StopPassenger" ToRole="Stop" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Driver_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Driver" Type="Self.Driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Driver">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outing_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Outing" Type="Self.Outing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="Outing">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Outing_Driver">
+          <End Role="Driver" Type="Self.Driver" Multiplicity="0..1" />
+          <End Role="Outing" Type="Self.Outing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="DriverId" />
+            </Principal>
+            <Dependent Role="Outing">
+              <PropertyRef Name="DriverId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Stop_Outing">
+          <End Role="Outing" Type="Self.Outing" Multiplicity="0..1" />
+          <End Role="Stop" Type="Self.Stop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outing">
+              <PropertyRef Name="OutingId" />
+            </Principal>
+            <Dependent Role="Stop">
+              <PropertyRef Name="OutingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassengerPreference_Passenger">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="0..1" />
+          <End Role="PassengerPreference" Type="Self.PassengerPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="PassengerId" />
+            </Principal>
+            <Dependent Role="PassengerPreference">
+              <PropertyRef Name="PassengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopPassenger_Passenger">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="1" />
+          <End Role="StopPassenger" Type="Self.StopPassenger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="PassengerId" />
+            </Principal>
+            <Dependent Role="StopPassenger">
+              <PropertyRef Name="PassengerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassengerPreference_Preference">
+          <End Role="Preference" Type="Self.Preference" Multiplicity="0..1" />
+          <End Role="PassengerPreference" Type="Self.PassengerPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Preference">
+              <PropertyRef Name="PreferenceId" />
+            </Principal>
+            <Dependent Role="PassengerPreference">
+              <PropertyRef Name="PreferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StopPassenger_Stop">
+          <End Role="Stop" Type="Self.Stop" Multiplicity="1" />
+          <End Role="StopPassenger" Type="Self.StopPassenger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stop">
+              <PropertyRef Name="StopId" />
+            </Principal>
+            <Dependent Role="StopPassenger">
+              <PropertyRef Name="StopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Hackathon2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Drivers" EntityType="Self.Driver" />
+          <EntitySet Name="Outings" EntityType="Self.Outing" />
+          <EntitySet Name="Passengers" EntityType="Self.Passenger" />
+          <EntitySet Name="PassengerPreferences" EntityType="Self.PassengerPreference" />
+          <EntitySet Name="Preferences" EntityType="Self.Preference" />
+          <EntitySet Name="Stops" EntityType="Self.Stop" />
+          <EntitySet Name="StopPassengers" EntityType="Self.StopPassenger" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <AssociationSet Name="FK_Driver_Company" Association="Self.FK_Driver_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Driver" EntitySet="Drivers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outing_Company" Association="Self.FK_Outing_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Outing" EntitySet="Outings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Outing_Driver" Association="Self.FK_Outing_Driver">
+            <End Role="Driver" EntitySet="Drivers" />
+            <End Role="Outing" EntitySet="Outings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Stop_Outing" Association="Self.FK_Stop_Outing">
+            <End Role="Outing" EntitySet="Outings" />
+            <End Role="Stop" EntitySet="Stops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassengerPreference_Passenger" Association="Self.FK_PassengerPreference_Passenger">
+            <End Role="Passenger" EntitySet="Passengers" />
+            <End Role="PassengerPreference" EntitySet="PassengerPreferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopPassenger_Passenger" Association="Self.FK_StopPassenger_Passenger">
+            <End Role="Passenger" EntitySet="Passengers" />
+            <End Role="StopPassenger" EntitySet="StopPassengers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassengerPreference_Preference" Association="Self.FK_PassengerPreference_Preference">
+            <End Role="Preference" EntitySet="Preferences" />
+            <End Role="PassengerPreference" EntitySet="PassengerPreferences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StopPassenger_Stop" Association="Self.FK_StopPassenger_Stop">
+            <End Role="Stop" EntitySet="Stops" />
+            <End Role="StopPassenger" EntitySet="StopPassengers" />
+          </AssociationSet>
+          <EntitySet Name="StopStatus1" EntityType="Hackathon2.Entity.StopStatus" />
+          <AssociationSet Name="FK_Stop_StopStatus" Association="Hackathon2.Entity.FK_Stop_StopStatus">
+            <End Role="StopStatu" EntitySet="StopStatus1" />
+            <End Role="Stop" EntitySet="Stops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passenger_Outing" Association="Hackathon2.Entity.FK_Passenger_Outing">
+            <End Role="Outing" EntitySet="Outings" />
+            <End Role="Passenger" EntitySet="Passengers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="StopStatus">
+          <Key>
+            <PropertyRef Name="StopStatusId" />
+          </Key>
+          <Property Name="StopStatusId" Type="Int16" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Stops" Relationship="Hackathon2.Entity.FK_Stop_StopStatus" FromRole="StopStatu" ToRole="Stop" />
+        </EntityType>
+        <Association Name="FK_Stop_StopStatus">
+          <End Type="Hackathon2.Entity.StopStatus" Role="StopStatu" Multiplicity="1" />
+          <End Type="Hackathon2.Entity.Stop" Role="Stop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StopStatu">
+              <PropertyRef Name="StopStatusId" />
+            </Principal>
+            <Dependent Role="Stop">
+              <PropertyRef Name="StopStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passenger_Outing">
+          <End Type="Hackathon2.Entity.Outing" Role="Outing" Multiplicity="0..1" />
+          <End Type="Hackathon2.Entity.Passenger" Role="Passenger" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Outing">
+              <PropertyRef Name="OutingId" />
+            </Principal>
+            <Dependent Role="Passenger">
+              <PropertyRef Name="CurrentOutingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Hackathon2EntityStoreContainer" CdmEntityContainer="Hackathon2Entities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drivers">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.Driver">
+              <MappingFragment StoreEntitySet="Driver">
+                <ScalarProperty Name="DriverId" ColumnName="DriverId" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Outings">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.Outing">
+              <MappingFragment StoreEntitySet="Outing">
+                <ScalarProperty Name="Text3LastUpdated" ColumnName="Text3LastUpdated" />
+                <ScalarProperty Name="Text2LastUpdated" ColumnName="Text2LastUpdated" />
+                <ScalarProperty Name="Text1LastUpdated" ColumnName="Text1LastUpdated" />
+                <ScalarProperty Name="Text3" ColumnName="Text3" />
+                <ScalarProperty Name="Text2" ColumnName="Text2" />
+                <ScalarProperty Name="Text1" ColumnName="Text1" />
+                <ScalarProperty Name="CurrentLocationLastUpdated" ColumnName="CurrentLocationLastUpdated" />
+                <ScalarProperty Name="CurrentLongitude" ColumnName="CurrentLongitude" />
+                <ScalarProperty Name="CurrentLatitude" ColumnName="CurrentLatitude" />
+                <ScalarProperty Name="OutingId" ColumnName="OutingId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="DriverId" ColumnName="DriverId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passengers">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.Passenger">
+              <MappingFragment StoreEntitySet="Passenger">
+                <ScalarProperty Name="CurrentOutingId" ColumnName="CurrentOutingId" />
+                <ScalarProperty Name="CurrentLongitude" ColumnName="CurrentLongitude" />
+                <ScalarProperty Name="CurrentLatitude" ColumnName="CurrentLatitude" />
+                <ScalarProperty Name="PassengerId" ColumnName="PassengerId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PassengerPreferences">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.PassengerPreference">
+              <MappingFragment StoreEntitySet="PassengerPreference">
+                <ScalarProperty Name="PassengerPreferenceId" ColumnName="PassengerPreferenceId" />
+                <ScalarProperty Name="PassengerId" ColumnName="PassengerId" />
+                <ScalarProperty Name="PreferenceId" ColumnName="PreferenceId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Preferences">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.Preference">
+              <MappingFragment StoreEntitySet="Preference">
+                <ScalarProperty Name="PreferenceId" ColumnName="PreferenceId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stops">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.Stop">
+              <MappingFragment StoreEntitySet="Stop">
+                <ScalarProperty Name="StopStatusId" ColumnName="StopStatusId" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="OutingId" ColumnName="OutingId" />
+                <ScalarProperty Name="RankSeq" ColumnName="RankSeq" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StopPassengers">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.StopPassenger">
+              <MappingFragment StoreEntitySet="StopPassenger">
+                <ScalarProperty Name="StopPassengerId" ColumnName="StopPassengerId" />
+                <ScalarProperty Name="StopId" ColumnName="StopId" />
+                <ScalarProperty Name="PassengerId" ColumnName="PassengerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StopStatus1">
+            <EntityTypeMapping TypeName="Hackathon2.Entity.StopStatus">
+              <MappingFragment StoreEntitySet="StopStatus">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StopStatusId" ColumnName="StopStatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

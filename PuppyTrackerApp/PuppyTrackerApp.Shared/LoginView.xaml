@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="PuppyTrackerApp.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PuppyTrackerApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" VerticalAlignment="Center">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="90"/>
+
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="90"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" FontSize="60" FontStyle="Italic" TextWrapping="WrapWholeWords" HorizontalAlignment="Center" Margin="-62,15,-62,32" Text="GEO Track Ringback" Grid.RowSpan="2" />
+
+        <TextBlock Grid.Row="2" Height="50" FontSize="42" HorizontalAlignment="Center" Margin="93,0,101,40" Text="User Name" ></TextBlock>
+        <TextBox Grid.Row="2" Height="50" Width="350" FontSize="28" HorizontalAlignment="Center" Margin="25,80,25,0" x:Name="UserName" Grid.RowSpan="2"></TextBox>
+        <TextBlock Grid.Row="3" Height="50" FontSize="42" HorizontalAlignment="Center" Margin="113,80,114,50" Text="Password" Grid.RowSpan="2"></TextBlock>
+        <PasswordBox Grid.Row="4" Height="50" Width="350" FontSize="28" HorizontalAlignment="Center" Margin="25,68,25,0" x:Name="Password" Grid.RowSpan="2"></PasswordBox>
+        <Button Grid.Row="5" Width="350" FontSize="28"  HorizontalAlignment="Center" Content="Log In" x:Name="Logon" Margin="25,57,25,61" Grid.RowSpan="2"></Button>
+        <TextBlock Grid.Row="6" Height="50" FontSize="42" x:Name="Status"></TextBlock>
+    </Grid>
+</Page>

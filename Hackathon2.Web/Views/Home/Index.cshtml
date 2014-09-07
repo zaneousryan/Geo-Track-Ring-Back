@@ -1,0 +1,22 @@
+﻿@model HomeModel
+@using Hackathon2.Web.Models
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>@Model.CompanyName</h1>
+    <p class="lead">Enjoy the ride!</p>
+</div>
+
+<div class="row">
+    <div class="col-md-offset-1 col-md-5">
+        <h3>Rides</h3>
+        <p>@Html.ActionLink("Start a new ride", "Outing", "Account")</p>
+        <p>@Html.ActionLink("See your current ride", "Route", "Account")</p>
+    </div>
+    <div class="col-md-6">
+        <h3>Preferences</h3>
+        <p>@Html.ActionLink("Tell us what you like", "Preferences", "Account")</p>
+    </div>
+</div>

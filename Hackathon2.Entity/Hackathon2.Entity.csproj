@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{89372D92-EB7D-4D94-A059-2D953CBFC40B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hackathon2.Entity</RootNamespace>
+    <AssemblyName>Hackathon2.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Company.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Driver.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Hackathon2Entities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Hackathon2Entities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Hackathon2Entities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Hackathon2Entities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Hackathon2Entities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Interface\Outing.cs" />
+    <Compile Include="Interface\Passenger.cs" />
+    <Compile Include="Interface\Stop.cs" />
+    <Compile Include="Logic.cs" />
+    <Compile Include="Logic_2.cs" />
+    <Compile Include="Logic_VoiceUpdates.cs" />
+    <Compile Include="Outing.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Passenger.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PassengerPreference.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Preference.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stop.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StopPassenger.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="StopStatus.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>Hackathon2Entities.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Hackathon2Entities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Hackathon2Entities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Hackathon2Entities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Hackathon2Entities.edmx</DependentUpon>
+      <LastGenOutput>Hackathon2Entities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Hackathon2Entities.edmx.diagram">
+      <DependentUpon>Hackathon2Entities.edmx</DependentUpon>
+    </None>
+    <None Include="Hackathon2Entities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Hackathon2Entities.edmx</DependentUpon>
+      <LastGenOutput>Hackathon2Entities.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hackathon2.Services.Models\Hackathon2.Services.Models.csproj">
+      <Project>{3a22857d-1132-4363-9b21-f03fb0bfe6c6}</Project>
+      <Name>Hackathon2.Services.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hackathon2.TCS.ToolKit\Hackathon2.TCS.ToolKit.csproj">
+      <Project>{9e7261d9-6c6b-4eb5-be67-433e3e701b27}</Project>
+      <Name>Hackathon2.TCS.ToolKit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
